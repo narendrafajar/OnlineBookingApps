@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Therapist extends Model
+class Categories extends Model
 {
     use HasFactory;
-    protected $table = 'therapist';
+    protected $table = 'categories';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'therapist_code',
-        'therapist_name',
-        'therapist_pic',
+        'category_name',
     ];
 }
