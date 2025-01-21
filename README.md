@@ -1,66 +1,299 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Banyumanik Beauty Salon Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
 
-## About Laravel
+- [Banyumanik Beauty Salon Project](#banyumanik-beauty-salon-project)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Features](#features)
+  - [Folder Structure](#folder-structure)
+  - [SQL Dump](#sql-dump)
+  - [API Documentation](#api-documentation)
+    - [Endpoints](#endpoints)
+      - [POST `/appointment`](#post-appointment)
+      - [Error Handling](#error-handling)
+  - [Frontend](#frontend)
+    - [HTML Structure](#html-structure)
+    - [JavaScript](#javascript)
+  - [Backend](#backend)
+    - [Controller Logic](#controller-logic)
+      - [AppointmentController](#appointmentcontroller)
+  - [Known Issues](#known-issues)
+  - [Future Improvements](#future-improvements)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This project is a web-based application for **Banyumanik Beauty Salon**, providing features such as online appointment booking, review management, and payment tracking. Users can:
 
-## Learning Laravel
+- Book treatments.
+- Select therapists and locations.
+- Manage and review appointments.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Requirements
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.0
+- Laravel >= 9.x
+- Node.js >= 14.x
+- MySQL >= 5.7
+- Composer >= 2.0
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Installation
 
-### Premium Partners
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/narendrafajar/OnlineBookingApps.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd banyumanik-salon
+   ```
+3. Install PHP dependencies:
+   ```bash
+   composer install
+   ```
+   ```
+4. Set up the `.env` file:
+   ```bash
+   cp .env.example .env
+   ```
+   Database name : salon
+   Configure the database and other settings in the `.env` file.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+6. Seed the database (if necessary):
+   ```bash
+   php artisan db:seed
+   ```
+7. Start the development server:
+   ```bash
+   php artisan serve
+   ```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Features
 
-## Code of Conduct
+- **Online Booking**:
+  - Select treatments.
+  - Choose therapists and locations.
+  - Specify date and time.
+- **Appointment Management**:
+  - Track and review booked appointments.
+- **Payment Details**:
+  - View payment.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Folder Structure
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```plaintext
+.
+├── app
+│   ├── Http
+│   │   ├── Controllers
+│   │   │       ├── ForUser
+│   │   │           ├── AppointmentController.php
+│   │   │           ├── HomeController.php
+│   │   │   └── HomepageController.php
+├── resources
+│   ├── views
+│   │   ├── layouts
+│   │   ├── appointment
+│   │   │   ├── user-page
+│   │   │       ├── form-appointment-review.blade.php
+│   │   │       ├── form-check-slots.blade.php
+│   │   │       ├── form-preview.blade.php
+│   │   │       ├── form-select-location.blade.php
+│   │   │       ├── form-select-therapist.blade.php
+│   │   │       ├── form-select-treatment.blade.php
+├── public
+│   ├── css
+│   ├── js
+│   │   ├── user-page
+│   │   │   ├── appointment-reviews.js
+│   │   │   ├── home.js
+│   │   │   ├── location-select.js
+│   │   │   ├── select-date.js
+│   │   │   ├── therapist.js
+│   │   │   └── treatment.js
+        ├── homepage.js
+        └── main.js
+```     
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## SQL Dump
+Running command php artisan database:backup
+
+## API Documentation
+
+### Endpoints
+
+#### POST `/appointment`
+
+Create a new appointment.
+
+- **Request Body**:
+
+```json
+{
+  "params": {
+    "location_id": 1,
+    "treatments": [1, 2, 3],
+    "date": "2025-01-25",
+    "time": "14:00",
+    "therapist": [5, 6]
+  }
+}
+```
+
+- **Response**:
+  - Success:
+    ```json
+    {
+      "success": true,
+      "message": "Appointment successfully booked"
+    }
+    ```
+  - Validation Error:
+    ```json
+    {
+      "success": false,
+      "errors": {
+        "params.location_id": ["The location_id field is required."]
+      }
+    }
+    ```
+
+#### Error Handling
+
+- **ValidationException** (422): Returns validation errors.
+- **GeneralException** (500): Returns a generic error message.
+
+---
+
+## Frontend
+
+### HTML Structure
+
+The review page contains a responsive table for displaying order details, such as:
+
+- Transaction ID.
+- Customer details.
+- Locations, treatments, therapist, date, and time.
+
+Example of the HTML snippet:
+
+```html
+<div class="card">
+  <h4 class="card-title text-center">Review</h4>
+  <table>
+    <tr>
+      <td>ID Trans</td>
+      <td>{{ $code }}</td>
+    </tr>
+    <tr>
+      <td>Customer</td>
+      <td>{{ Auth::user()->name }}</td>
+    </tr>
+    <!-- Other details -->
+  </table>
+</div>
+```
+
+### JavaScript
+
+The `appointment-reviews.js` script handles form submissions and API interactions.
+
+```javascript
+$('#submitBtn').on('click', function () {
+    axios.post('/appointment', {
+        params: {
+            location_id: selectedLocationId,
+            treatments: selectedCards,
+            date: selectedDate,
+            time: selectedTime,
+            therapist: selectedTherapist
+        }
+    }).then(function (response) {
+        if (response.data.success) {
+            alert('Appointment Successfully Booked');
+            window.location.href = '/user-home';
+        } else {
+            alert('Error: ' + response.data.message);
+        }
+    }).catch(function (error) {
+        if (error.response) {
+            console.error('Validation Error:', error.response.data.errors);
+        }
+    });
+});
+```
+
+---
+
+## Backend
+
+### Controller Logic
+
+#### AppointmentController
+
+- **Validation**:
+
+```php
+$validatedData = $request->validate([
+    'params.location_id' => 'required|integer',
+    'params.treatments' => 'required|array',
+    'params.treatments.*' => 'integer',
+    'params.date' => 'required|date',
+    'params.time' => 'required|string',
+    'params.therapist' => 'required|array',
+    'params.therapist.*' => 'integer',
+]);
+```
+
+- **Error Handling**:
+
+```php
+try {
+    DB::transaction(function () use ($params) {
+        // Store appointment logic
+    });
+    return response()->json(['success' => true], 200);
+} catch (ValidationException $e) {
+    return response()->json(['success' => false, 'errors' => $e->errors()], 422);
+} catch (Exception $e) {
+    return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+}
+```
+
+---
+
+## Known Issues
+
+- Error messages are not yet localized.
+- Timezone discrepancies in appointment booking.
+
+---
+
+## Future Improvements
+
+- Add support for multiple languages.
+- Implement real-time notifications for appointment statuses.
+- Enhance error handling with more descriptive messages.
+
+---
+
+For further questions, feel free to contact the development team!
+
