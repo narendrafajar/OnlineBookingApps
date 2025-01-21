@@ -45,5 +45,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/getAllAppointment',[AppointmentController::class,'getAllAppoinment']);
     Route::post('/appointment',[AppointmentController::class,'store']);
 
+    Route::post('/refresh-token', function () {
+        $newToken = auth()->refresh();
+        return response()->json([
+            'status' => 'success',
+            'token' => $newToken,
+        ]);
+    });
+
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });

@@ -15,7 +15,7 @@ $(document).ready(function (){
             date: selectedDate,
             time: selectedTime
         };
-
+        // console.log(dataToSend);
     axios
         .post('/getAllAppointment',{
             params: {
