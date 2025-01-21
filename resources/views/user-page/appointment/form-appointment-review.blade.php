@@ -87,11 +87,22 @@
                     </div>   
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary btn-lg w-100">{{__('Submit')}}</button>
+                    <button type="button" class="btn btn-primary btn-lg w-100" id="submitBtn"><i class="bi bi-save-fill"></i> {{__('Submit')}}</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalNotif" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <center>
+                <img src="{{asset('obs/img/check.gif')}}" alt="" width="200" height="200">
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
 @section('additional_js')
 <script src="{{ asset('obs/js/user-page/appointment-reviews.js') }}"></script>
 @endsection  

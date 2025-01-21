@@ -6,7 +6,8 @@ $('#btnLogin').on('click',function(){
     let email = $('#email').val();
     let pass = $('#password').val();
 
-    // console.log(email, pass);
+    $('#loginForm').hide('fast');
+    $('#loaderForm').show('fast');
 
     axios
         .post('login', {
@@ -15,21 +16,24 @@ $('#btnLogin').on('click',function(){
         })
         .then(response => {
             if (response.data.status === 'success') {
-                console.log(response.data);
                 localStorage.setItem('token', response.data.token);
+                $('#loginForm').show('fast');
+                $('#loaderForm').hide('fast');
                 $('#loginModal').modal('hide');
                 if(response.data.role === 'superadmin'){
-                    alert('login admin Berhasil');
+                    messageAlert(response.message);
                     window.location.href = '/admin-home';
                 } else {
-                    alert('User login Berhasil');
+                    messageAlert('Anda berhasil login',1);
                     window.location.href = '/user-home';
                 }
             }
         })
         .catch(error => {
             if(error.response){
-                alert(error.response.data.message);
+                messageAlert(error.response.data.message,1);
+                $('#loginForm').show('fast');
+                $('#loaderForm').hide('fast');
             }
         })
 });

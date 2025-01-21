@@ -35,7 +35,13 @@ $(document).ready(function () {
     });
 
     $('#btnNext').on('click', function(){
-        window.location.href = '/select-slots'
+        if(selectedCards.length != 0) {
+            messageAlert('Treatment Selected');
+            window.location.href = '/select-slots'
+        } else {
+            messageAlert('Please select treatment first!',1);
+        }
+        
     })
 
     $('#btnBack').on('click', function(){

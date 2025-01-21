@@ -1,4 +1,27 @@
 <x-guest-layout>
+    {{-- @if (Session::has('error'))
+        <div class="alert alert-important alert-danger alert-dismissible" role="alert">
+            <div class="d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/alert-circle</desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <div>
+                    {{ __(Session::get('error')) }}
+                </div>
+            </div>
+            <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
+        </div>
+    @endif
+    @if(Session::has('success'))
+        <div class="alert alert-important alert-success alert-dismissible" role="alert">
+            <div class="d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/check</desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12l5 5l10 -10"></path></svg>
+                <div>
+                    {{ __(Session::get('success')) }}
+                </div>
+            </div>
+            <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
+        </div>
+    @endif
+    <div id="message-alert"></div> --}}
     <div class="branding d-flex align-items-center">
         <div class="container position-relative d-flex align-items-center justify-content-center">
             @include('layouts.navigation')
@@ -123,22 +146,50 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="form-control-plaintext text-center">{{__('Silahkan masuk untuk melakukan reservasi')}}</div>
-              <div class="row">
-                <form action="">
-                    @csrf
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="mb-3">
-                            <label for="" class="form-label">{{__('Email')}}</label>
-                            <input type="email" class="form-control" placeholder="Masukkan email anda" name="email" id="email" required>
+                @if (Session::has('error'))
+                    <div class="alert alert-important alert-danger alert-dismissible" role="alert">
+                        <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/alert-circle</desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            <div>
+                                {{ __(Session::get('error')) }}
+                            </div>
                         </div>
+                        <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <label for="" class="form-label">{{__('Password')}}</label>
-                        <input type="password" class="form-control" placeholder="Masukkan password anda" name="password" id="password" required>
+                @endif
+                @if(Session::has('success'))
+                    <div class="alert alert-important alert-success alert-dismissible" role="alert">
+                        <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/check</desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12l5 5l10 -10"></path></svg>
+                            <div>
+                                {{ __(Session::get('success')) }}
+                            </div>
+                        </div>
+                        <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
                     </div>
-                </form>
-              </div>
+                @endif
+                <div id="message-alert"></div>
+              <div class="form-control-plaintext text-center">{{__('Silahkan masuk untuk melakukan reservasi')}}</div>
+                <div class="row" id="loginForm">
+                    <form action="">
+                        @csrf
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="mb-3">
+                                <label for="" class="form-label">{{__('Email')}}</label>
+                                <input type="email" class="form-control" placeholder="Masukkan email anda" name="email" id="email" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label for="" class="form-label">{{__('Password')}}</label>
+                            <input type="password" class="form-control" placeholder="Masukkan password anda" name="password" id="password" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="row" id="loaderForm" style="display: none">
+                    <center>
+                        <div> <img src="{{asset('obs/img/loading_new.gif')}}" alt=""></div>
+                    </center>
+                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batalkan</button>

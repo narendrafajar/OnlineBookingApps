@@ -20,15 +20,16 @@ $(document).ready(function () {
                   params : { location_id : selectedId }
               })
               .then(function(response){
-                  console.log('API response', response.data);
-                  window.location.href = '/treatments';
+                //   console.log('API response', response.data);
+                    messageAlert('Location successfuly selected');
+                    window.location.href = '/treatments';
               })
               .catch(function(error){
                   // console.log('Error:', error);
-                  alert('An error occurred while selecting the location');
+                  messageAlert(error);
               });
       } else {
-          alert('Please select a location');
+        messageAlert('Please Select Location',1);
       }
   });
 });

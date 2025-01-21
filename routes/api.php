@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/preview',[AppointmentController::class,'previewUser']);
     Route::get('/appointment-review',[AppointmentController::class,'app_review'])->name('app_review');
     Route::post('/getAllAppointment',[AppointmentController::class,'getAllAppoinment']);
+    Route::post('/appointment',[AppointmentController::class,'store']);
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });

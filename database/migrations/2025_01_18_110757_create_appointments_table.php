@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('app_code')->unique();
             $table->foreignId('users_id')->constrained('users');
-            $table->foreignId('therapist_id')->constrained('therapist');
             $table->date('appointment_date');
             $table->time('appointment_time');
             $table->timestamps();

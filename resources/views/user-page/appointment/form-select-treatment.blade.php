@@ -1,5 +1,6 @@
 @section('title-page','Treatments')
 <x-app-layout>
+    <div id="message-alert"></div>
     <div class="container my-4">
         <div class="col-12">
             <h4 class="text-center mb-3">{{__('Select Treatment')}}</h4>
@@ -18,7 +19,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text text-center">{{$valTreatment->treatment_name}}</p>
-                                    <p class="card-text text-center">{{$valTreatment->treatment_price}}</p>
+                                    <p class="card-text text-center">{{formatRupiah($valTreatment->treatment_price)}}</p>
                                 </div>
                             </div>
                         </div>

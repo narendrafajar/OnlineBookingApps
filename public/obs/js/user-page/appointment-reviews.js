@@ -3,7 +3,7 @@
 // const { data } = require("alpinejs");
 
 $(document).ready(function (){
-    var selectedLocationId = localStorage.getItem('selectedLocationId');
+        var selectedLocationId = localStorage.getItem('selectedLocationId');
         var selectedCards = JSON.parse(localStorage.getItem('selectedCards')) || [];
         var selectedDate = localStorage.getItem("selectedDate");
         var selectedTime = localStorage.getItem("selectedTime");
@@ -13,8 +13,7 @@ $(document).ready(function (){
             location_id: selectedLocationId,
             treatments: selectedCards, // Mengirimkan array treatment
             date: selectedDate,
-            time: selectedTime,
-            therapist : selectedTherapist
+            time: selectedTime
         };
 
     axios
@@ -28,7 +27,6 @@ $(document).ready(function (){
             }
         })
         .then(function(response){
-            console.log(response.data.data)
             $('#locationsName').text(response.data.data.locations.location_name);
             $('#bodyTreatments').html('');
             $.each(response.data.data.treatments,function(index,valTreat){
@@ -46,7 +44,7 @@ $(document).ready(function (){
                     </tr>
                 `);
             });
-            $('#dateApp').text(response.data.data.date);
+            $('#dateApp').text(formatDate(response.data.data.date));
             $('#timeApp').text(response.data.data.time);
             let totalPayment = parseFloat(0);
             $.each(response.data.data.treatments,function(index,valPaymentTreat){
@@ -54,14 +52,58 @@ $(document).ready(function (){
                 $('#bodyDetailPayment').append(`
                     <tr>
                         <td>${valPaymentTreat.treatment_name} (${valPaymentTreat.category.category_name})</td>
-                        <td class="text-end">${valPaymentTreat.treatment_price}</td>
+                        <td class="text-end">${'Rp.'+ moneyFormat(valPaymentTreat.treatment_price)}</td>
                     </tr>
                 `);
             });
 
-            $('#totalPayment').text(totalPayment);
+            $('#totalPayment').text('Rp. ' + moneyFormat(totalPayment));
         })
         .catch(function(error){
+            console.error('Error:', error);
+        });
 
+        $('#submitBtn').on('click', function () {
+            axios
+                .post('/appointment', {
+                    params: {
+                        location_id: selectedLocationId,
+                        treatments: selectedCards,
+                        date: selectedDate,
+                        time: selectedTime,
+                        therapist: selectedTherapist
+                    }
+                })
+                .then(function (response) {
+                    if (response.data.success) {
+                        // alert('Appointment Successfully Booked');
+                        $('#modalNotif').modal('show');
+                        setTimeout(function() {
+                            $('#modalNotif').modal('hide');
+                        }, 3000);
+                        localStorage.clear();
+                        window.location.href = '/user-home';
+                    } else {
+                        alert('Error: ' + response.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        if (error.response.status === 422) {
+                            let validationErrors = error.response.data.errors;
+                            let errorMessage = 'Validation errors:\n';
+                            for (let key in validationErrors) {
+                                errorMessage += `${key}: ${validationErrors[key].join(', ')}\n`;
+                            }
+                            alert(errorMessage);
+                        } else {
+                            alert('Server Error: ' + error.response.data.message);
+                        }
+                    } else if (error.request) {
+                        alert('No response received from server.');
+                    } else {
+                        alert('Error: ' + error.message);
+                    }
+                });
         });
 })

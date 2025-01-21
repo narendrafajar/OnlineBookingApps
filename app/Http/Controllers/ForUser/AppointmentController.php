@@ -4,11 +4,14 @@ namespace App\Http\Controllers\ForUser;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\AppointmentsDetail;
 use App\Models\Treatments;
 use App\Models\Categories;
 use App\Models\locations;
 use App\Models\Therapist;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -20,6 +23,7 @@ class AppointmentController extends Controller
     protected Treatments $treatment;
     protected Categories $category;
     protected Appointment $appointment;
+    protected AppointmentsDetail $appdetail;
     protected Therapist $therapists;
 
     public function __construct(
@@ -28,6 +32,7 @@ class AppointmentController extends Controller
         Categories $category,
         Appointment $appointment,
         Therapist $therapists,
+        AppointmentsDetail $appdetail,
     )
     {
         $this->location = $location;
@@ -35,6 +40,7 @@ class AppointmentController extends Controller
         $this->category = $category;
         $this->appointment = $appointment;
         $this->therapist = $therapists;
+        $this->appDetail = $appdetail;
     }
 
     public function index()
@@ -71,21 +77,18 @@ class AppointmentController extends Controller
     {
         $dateSelect = $request->date;
 
-        // Ambil jadwal yang sudah ada pada tanggal yang dipilih
         $checkDate = $this->appointment
             ->where('appointment_date', $dateSelect)
             ->pluck('appointment_time')
             ->toArray();
 
-        // Slot waktu yang tersedia
         $timeSlots = [
-            "08:00", "09:00", "10:00", "11:00", "12:00",
-            "13:00", "14:00", "15:00", "16:00", "17:00",
-            "18:00", "19:00", "20:00", "21:00", "22:00",
-            "23:00", "24:00"
+            "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00",
+            "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00",
+            "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00",
+            "23:00:00", "24:00:00"
         ];
 
-        // Siapkan format untuk setiap slot waktu
         $slots = [];
         foreach ($timeSlots as $slot) {
             $slots[] = [
@@ -122,7 +125,69 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        try {
+            $params = $request->input('params');
+            $validatedData = $request->validate([
+                'params.location_id' => 'required|integer',
+                'params.treatments' => 'required|array',
+                'params.treatments.*' => 'integer',
+                'params.date' => 'required|date',
+                'params.time' => 'required|string',
+                'params.therapist' => 'required|array',
+                'params.therapist.*' => 'integer',
+            ]);
+            $storeTransaction = DB::transaction(function () use ($request,$params) {           
+                $idLocations = $params['location_id'];
+                $treatmentId = $params['treatments']; // array
+                $date = $params['date'];
+                $timeSelect = $params['time'];
+                $therapistId = $params['therapist']; // array
+
+                // dd($therapistId);
+
+                $storeAppointment = $this->appointment->create([
+                    'app_code' => $this->getTransactionCode(),
+                    'users_id' => Auth::user()->id,
+                    'appointment_date' => $date,
+                    'appointment_time' => $timeSelect,
+                ]);
+
+                foreach ($treatmentId as $index => $treatment) {
+                    if (isset($therapistId[$index])) {
+                        $this->appDetail->create([
+                            'app_id' => $storeAppointment->id,
+                            'treatment_id' => $treatment,
+                            'therapist_id' => $therapistId[$index],
+                        ]);
+                    }
+                }
+
+                return 'success';
+            });
+            if ($storeTransaction) {
+                return response()->json([
+                    'success' => true
+                ],200);
+            } else {
+                return response()->json([
+                    'error' => true
+                ]);
+            }
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            //throw $th;
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            // Tangkap error umum
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while booking the appointment.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

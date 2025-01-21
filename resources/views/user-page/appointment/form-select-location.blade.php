@@ -1,5 +1,6 @@
 @section('title-page','Locations')
 <x-app-layout>
+    <div id="message-alert"></div>
     <div class="container my-4">
         <h4 class="text-center mb-3">{{__('Select Locations')}}</h4>
         <div class="row">

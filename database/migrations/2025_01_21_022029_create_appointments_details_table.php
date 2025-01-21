@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('app_id')->constrained('appointments');
             $table->foreignId('treatment_id')->constrained('treatments');
-            $table->foreignId('therapist_id')->constrained('therapist');
+            $table->foreignId('therapist_id')->nullable()->constrained('therapist');
             $table->timestamps();
         });
     }
