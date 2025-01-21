@@ -2,35 +2,86 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="{{asset('obs/img/favicon.png')}}" rel="icon">
+        <link href="{{asset('obs/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+        <link href="https://fonts.googleapis.com" rel="preconnect">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_green.css">
+        <link href="{{asset('obs/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('obs/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+
+
+        <link href="{{asset('obs/vendor/aos/aos.css')}}" rel="stylesheet">
+        <link href="{{asset('obs/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+        <link href="{{asset('obs/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+        {{-- <link href="{{asset('obs/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet"> --}}
+
+        <!-- Main CSS File -->
+        <link href="{{asset('obs/css/main.css')}}" rel="stylesheet">
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+    <body class="index-page">
+        <header id="header" class="header sticky-top">
+          <div class="topbar d-flex align-items-center">
+              <div class="container d-flex justify-content-center justify-content-md-between">
+                <div class="d-none d-md-flex align-items-center">
+                  <i class="bi bi-phone me-1"></i> 
+                  {{__('Hubungi kami +62 24745124')}}
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-map me-1"></i> {{__(' Jl. Cemara, Banyumanik, Semarang')}}
+                </div>
+              </div>
+            </div>
+      </header>
+        <main class="main">
+            <div class="col-12">
+              <div class="branding d-flex align-items-center">
+                <div class="container position-relative d-flex align-items-center justify-content-center mb-3">
+                    @include('layouts.navigation')
+                  </div>
+              </div>
+              <div class="container mb-3">
+                  <div class="row text-center">
+                      <div class="col-sm-12 col-md-12 col-lg-12">
+                          <h1>@yield('title-page')</h1>
+                          <h3>@yield('subtitle-page')</h3>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            {{$slot}}
+        </main>
+        <!-- Scroll Top -->
+        <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <!-- Preloader -->
+        {{-- <div id="preloader"></div> --}}
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+        <!-- Vendor JS Files -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        {{-- <script src="{{asset('obs/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
+        <script src="{{asset('obs/vendor/php-email-form/validate.js')}}"></script>
+        <script src="{{asset('obs/vendor/aos/aos.js')}}"></script>
+        <script src="{{asset('obs/vendor/glightbox/js/glightbox.min.js')}}"></script>
+        <script src="{{asset('obs/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+        {{-- <script src="{{asset('obs/vendor/swiper/swiper-bundle.min.js')}}"></script> --}}
+
+        <!-- Main JS File -->
+        <script src="{{asset('obs/js/main.js')}}"></script>
+        @yield('additional_js')
     </body>
 </html>

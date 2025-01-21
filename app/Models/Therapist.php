@@ -15,4 +15,9 @@ class Therapist extends Model
         'therapist_name',
         'therapist_pic',
     ];
+
+    // public function treatments()
+    // {
+
+    // }
 }

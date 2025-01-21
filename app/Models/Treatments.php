@@ -19,4 +19,14 @@ class Treatments extends Model
         'treatment_price',
         'treatment_recomend',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class,'category_id');
+    }
+
+    public function personTherapist()
+    {
+        return $this->belongsTo(Therapist::class,'therapist_id');
+    }
 }

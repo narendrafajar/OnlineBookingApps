@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ForUser;
 
+use App\Http\Controllers\Controller;
 use App\Models\Treatments;
 use Illuminate\Http\Request;
 use Goutte\Client;
+use Illuminate\Support\Facades\Auth;
 
-class HomepageController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    protected $tables = array('treatment');
-    protected Treatments $treatments;
-
-    public function __construct(
-        Treatments $treatments,
-    )
+    public function index(Request $request)
     {
-        $this->treatment = $treatments;
-    }
-    public function index()
-    {
-        $lstPerawatan = $this->treatment->where('treatment_recomend','!=','0')->get();
-        $feed = $this->getBeautyArticles();
-        // dd($feed);
-        return view('homepage',['lstTreatment'=>$lstPerawatan,'feed'=>$feed]);
+        // dd($request->all());
+        $user = Auth::user();
+        // dd($user);
+        if($user->role == 'superadmin'){
+            // $feed = $this->getBeautyArticles();
+            return view('admin-page.home.index');
+        } else {
+            $feed = $this->getBeautyArticles();
+            return view('user-page.home.home',['feed'=>$feed]);
+        }
+       
     }
 
     /**
@@ -93,6 +93,4 @@ class HomepageController extends Controller
         // dd($articles);
         return $articles;
     }
-
-
 }

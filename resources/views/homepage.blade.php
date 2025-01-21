@@ -12,49 +12,61 @@
             </div>
         </div>
     </div>
-    <div class="card card-accent-color">
+    <div class="card card-accent-color mb-3">
         <div class="col-12">
             <div class="card-body">
-                <div class="row justify-content-center">
-                    <div class="container section-title">
-                        <h2>{{__('Treatment')}}</h2>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
-                        <div id="treatmentCarousel" class="carousel slide" data-bs-ride="carousel">
-                            @foreach ($lstTreatment as $key => $treatment)
-                            <div class="carousel-item @if($key === 0) active @endif">
-                                <div class="d-flex justify-content-center">
-                                    <div class="card treatment-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{$treatment->treatment_name}}</h5>
-                                            <p class="card-text">{{$treatment->treatment_desc}}</p>
-                                            <div class="text-center">
-                                                <a href="#" class="btn btn-outline-primary">{{__('Reservasi')}}</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="container section-title mb-4">
+                            <h2>{{__('Reservation')}}</h2>
+                            <p class="mb-3">{{__('Percantik Hari-harimu Bersama Kami')}}</p>
+                            <p>
+                                <buton type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">{{__('Reservasi Sekarang')}}</button>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="card mb-3">
         <div class="col-12">
             <div class="card-body">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="container section-title mb-4">
-                            <h2 class="text-black">{{__('Reservation')}}</h2>
-                            <p class="mb-3">{{__('Percantik Hari-harimu Bersama Kami')}}</p>
-                            <p>
-                                <a class="btn btn-lg btn-primary" href="#appointment">{{__('Reservasi Sekarang')}}</a>
-                            </p>
+                <div class="row justify-content-center">
+                    <div class="container section-title">
+                        <h2 class="text-black">{{__('Treatment')}}</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                        <div id="treatmentCarousel" class="carousel slide">
+                              <div class="carousel-inner">
+                                @foreach ($lstTreatment as $key => $treatment)
+                                <div class="carousel-item @if($key === 0) active @endif">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="card treatment-card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{$treatment->treatment_name}}</h5>
+                                                <p class="card-text">{{$treatment->treatment_desc}}</p>
+                                                <div class="text-center">
+                                                    <a href="#" class="btn btn-outline-primary">{{__('Reservasi')}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                              </div>
                         </div>
                     </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#treatmentCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#treatmentCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                      <p class="text-center"><small><i>{{__('Slide to next content >>')}}</i></small></p>
                 </div>
             </div>
         </div>
@@ -68,75 +80,74 @@
                         <h2>{{__('Feed')}}</h2>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
-                        <div id="treatmentCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-
-                                <!-- Slide 1 -->
-                                <div class="carousel-item active">
-                                  <div class="d-flex justify-content-center gap-3">
-                                    <!-- Card 1 -->
-                                    <div class="card treatment-card">
-                                      <img src="https://picsum.photos/300/200" class="card-img-top" alt="Facial Glow">
-                                      <div class="card-body text-center">
-                                        <h5 class="card-title">Facial Glow</h5>
-                                        <p class="card-text">Meningkatkan kelembapan kulit dan membuat wajah tampak lebih cerah.</p>
-                                        <a href="#" class="btn btn-primary">Lihat Detail</a>
-                                      </div>
+                        <div id="feedCarousel" class="carousel slide">
+                            <div class="row">
+                                @foreach ($feed as $key => $feedVal)
+                                <div class="carousel-item @if($key === 0) active @endif">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="card treatment-card">
+                                            <div class="card-body">
+                                                <div class="treatment-card-image mb-3">
+                                                    <img src="{{$feedVal['image']}}" alt="{{$feedVal['title']}}">
+                                                </div>
+                                                <h6 class="card-title">{{$feedVal['title']}}</h6>
+                                                <p class="card-text"></p>
+                                                <div class="text-center">
+                                                    <a href="{{$feedVal['link']}}" class="btn btn-outline-primary" target="_BLANK">{{__('Selengkapnya')}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                        
-                                    <!-- Card 2 -->
-                                    <div class="card treatment-card">
-                                      <img src="https://picsum.photos/300/200" class="card-img-top" alt="Hair Spa">
-                                      <div class="card-body text-center">
-                                        <h5 class="card-title">Hair Spa</h5>
-                                        <p class="card-text">Perawatan rambut intensif untuk rambut lebih sehat dan lembut.</p>
-                                        <a href="#" class="btn btn-primary">Lihat Detail</a>
-                                      </div>
-                                    </div>
-                                  </div>
                                 </div>
-                        
-                                <!-- Slide 2 -->
-                                <div class="carousel-item">
-                                  <div class="d-flex justify-content-center gap-3">
-                                    <!-- Card 3 -->
-                                    <div class="card treatment-card">
-                                      <img src="https://picsum.photos/300/200" class="card-img-top" alt="Manicure & Pedicure">
-                                      <div class="card-body text-center">
-                                        <h5 class="card-title">Manicure & Pedicure</h5>
-                                        <p class="card-text">Nikmati kuku yang bersih, rapi, dan tampilan menawan.</p>
-                                        <a href="#" class="btn btn-primary">Lihat Detail</a>
-                                      </div>
-                                    </div>
-                        
-                                    <!-- Card 4 -->
-                                    <div class="card treatment-card">
-                                      <img src="https://picsum.photos/300/200" class="card-img-top" alt="Body Scrub">
-                                      <div class="card-body text-center">
-                                        <h5 class="card-title">Body Scrub</h5>
-                                        <p class="card-text">Eksfoliasi tubuh untuk kulit lebih halus dan bercahaya.</p>
-                                        <a href="#" class="btn btn-primary">Lihat Detail</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                        
-                              </div>
-                        
-                              <!-- Controls -->
-                              <button class="carousel-control-prev" type="button" data-bs-target="#treatmentCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#treatmentCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                              </button>
+                                @endforeach
                             </div>
                         </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#feedCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#feedCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">{{__('Login')}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-control-plaintext text-center">{{__('Silahkan masuk untuk melakukan reservasi')}}</div>
+              <div class="row">
+                <form action="">
+                    @csrf
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="mb-3">
+                            <label for="" class="form-label">{{__('Email')}}</label>
+                            <input type="email" class="form-control" placeholder="Masukkan email anda" name="email" id="email" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label for="" class="form-label">{{__('Password')}}</label>
+                        <input type="password" class="form-control" placeholder="Masukkan password anda" name="password" id="password" required>
+                    </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batalkan</button>
+              <button type="button" class="btn btn-primary" id="btnLogin">Masuk</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      @section('additional_js')
+      <script src="{{ asset('obs/js/homepage.js') }}"></script>
+      @endsection  
 </x-guest-layout>

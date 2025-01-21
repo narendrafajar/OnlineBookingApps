@@ -13,4 +13,10 @@ class Categories extends Model
     protected $fillable = [
         'category_name',
     ];
+
+
+    public function manyTreatments()
+    {
+       return $this->hasMany(Treatments::class,'category_id');
+    }
 }

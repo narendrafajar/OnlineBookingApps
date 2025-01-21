@@ -18,20 +18,23 @@ class TreatmentSeeder extends Seeder
         $treatment = [
             [
                 'name' => 'Glow Facial',
+                'image_storage' => 'glow-facial.jpeg',
                 'category_id' => 1,
                 'price' => 250000,
                 'desc' => 'Perawatan wajah yang membantu kulit tampak cerah dan bercahaya.',
                 'recomend' => '0'
             ],
             [
-                'name' => 'Anti-Aging Facial',
+                'name' => 'Anti-Aging',
+                'image_storage' => 'antiaging.jpg',
                 'category_id' => 1,
                 'price' => 300000,
                 'desc' => 'Perawatan khusus untuk mengurangi tanda-tanda penuaan seperti kerutan dan garis halus.',
                 'recomend' => '1'
             ],
             [
-                'name' => 'Acne Treatment',
+                'name' => 'Acne',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 1,
                 'price' => 220000,
                 'desc' => 'Perawatan efektif untuk mengurangi jerawat dan bekas jerawat.',
@@ -39,21 +42,24 @@ class TreatmentSeeder extends Seeder
             ],
 
             [
-                'name' => 'Hair Spa',
+                'name' => 'Spa',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 2,
                 'price' => 150000,
                 'desc' => 'Perawatan rambut untuk memperbaiki dan menjaga kesehatan rambut.',
                 'recomend' => '0'
             ],
             [
-                'name' => 'Hair Coloring',
+                'name' => 'Coloring',
+                'image_storage' => 'hair-coloring.jpg',
                 'category_id' => 2,
                 'price' => 500000,
                 'desc' => 'Memberikan warna baru pada rambut Anda sesuai keinginan.',
                 'recomend' => '0'
             ],
             [
-                'name' => 'Hair Cut',
+                'name' => 'Cut',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 2,
                 'price' => 75000,
                 'desc' => 'Potongan rambut sesuai dengan gaya dan tren terkini.',
@@ -62,6 +68,7 @@ class TreatmentSeeder extends Seeder
 
             [
                 'name' => 'Manicure',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 3,
                 'price' => 100000,
                 'desc' => 'Perawatan kuku tangan agar terlihat bersih, rapi, dan cantik.',
@@ -69,6 +76,7 @@ class TreatmentSeeder extends Seeder
             ],
             [
                 'name' => 'Pedicure',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 3,
                 'price' => 120000,
                 'desc' => 'Perawatan kuku kaki untuk kebersihan dan kesehatan kaki.',
@@ -76,6 +84,7 @@ class TreatmentSeeder extends Seeder
             ],
             [
                 'name' => 'Nail Art',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 3,
                 'price' => 200000,
                 'desc' => 'Dekorasi seni kuku dengan desain kreatif yang unik.',
@@ -84,6 +93,7 @@ class TreatmentSeeder extends Seeder
 
             [
                 'name' => 'Body Scrub',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 4,
                 'price' => 180000,
                 'desc' => 'Eksfoliasi kulit tubuh untuk mengangkat sel kulit mati dan memberikan kulit yang halus.',
@@ -91,13 +101,15 @@ class TreatmentSeeder extends Seeder
             ],
             [
                 'name' => 'Massage Therapy',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 4,
                 'price' => 300000,
                 'desc' => 'Pijat relaksasi untuk melepaskan ketegangan otot dan stres.',
                 'recomend' => '0'
             ],
             [
-                'name' => 'Slimming Treatment',
+                'name' => 'Slimming',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 4,
                 'price' => 400000,
                 'desc' => 'Perawatan untuk membantu mengurangi lemak tubuh dan mendapatkan bentuk tubuh ideal.',
@@ -105,21 +117,24 @@ class TreatmentSeeder extends Seeder
             ],
 
             [
-                'name' => 'Party Makeup',
+                'name' => 'Party',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 5,
                 'price' => 600000,
                 'desc' => 'Makeup untuk acara pesta agar tampil memukau dan percaya diri.',
                 'recomend' => '1'
             ],
             [
-                'name' => 'Bridal Makeup',
+                'name' => 'Bridal',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 5,
                 'price' => 1000000,
                 'desc' => 'Riasan khusus untuk pengantin agar terlihat anggun di hari istimewa.',
                 'recomend' => '0'
             ],
             [
-                'name' => 'Everyday Makeup',
+                'name' => 'Everyday',
+                'image_storage' => 'salon.jpg',
                 'category_id' => 5,
                 'price' => 400000,
                 'desc' => 'Makeup natural untuk keseharian agar terlihat segar dan menarik.',
@@ -137,7 +152,7 @@ class TreatmentSeeder extends Seeder
         foreach ($treatment as $treatment) {
             Treatments::create([
                 'category_id' => $treatment['category_id'],
-                'image_treatments' => null,
+                'image_treatments' => $treatment['image_storage'],
                 'treatment_code' => 'TRT-' . strtoupper(Str::random(6)),
                 'treatment_name' => $treatment['name'],
                 'treatment_desc' => $treatment['desc'],

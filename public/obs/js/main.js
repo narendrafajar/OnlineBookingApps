@@ -199,4 +199,31 @@
       e.preventDefault(); // Mencegah klik kanan
   });
 
+  $('#btnLogout').on('click', function(){
+    let token = localStorage.getItem('token');
+
+    if (!token) {
+        alert('Anda belum login.');
+        return;
+    }
+
+    axios
+        .post('/logout', {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (response.data.status === 'success') {
+                localStorage.removeItem('token');
+                alert('Logout berhasil.');
+                window.location.href = '/';
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Terjadi kesalahan saat logout.');
+        });
+  });
+
 })();

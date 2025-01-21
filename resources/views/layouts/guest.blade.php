@@ -69,6 +69,6 @@
 
         <!-- Main JS File -->
         <script src="{{asset('obs/js/main.js')}}"></script>
-        
+        @yield('additional_js')
     </body>
 </html>
